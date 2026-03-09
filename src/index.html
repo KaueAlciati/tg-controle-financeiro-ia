@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FinPulse - AI Financial Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Left Sidebar (Persistent) -->
+        <aside class="sidebar">
+            <div class="sidebar-top">
+                <div class="logo">
+                    <i class="ph-fill ph-pulse"></i>
+                    <span>FinPulse</span>
+                </div>
+                <nav class="menu">
+                    <a href="#" class="menu-item active" data-target="overview">
+                        <i class="ph ph-squares-four"></i>
+                        <span>Overview</span>
+                    </a>
+                    <a href="#" class="menu-item" data-target="transactions">
+                        <i class="ph ph-arrows-left-right"></i>
+                        <span>Transactions</span>
+                    </a>
+                    <a href="#" class="menu-item" data-target="goals">
+                        <i class="ph ph-target"></i>
+                        <span>Goals</span>
+                    </a>
+                    <a href="#" class="menu-item" data-target="investments">
+                        <i class="ph ph-chart-line-up"></i>
+                        <span>Investments</span>
+                    </a>
+                </nav>
+            </div>
+
+            <div class="sidebar-bottom">
+                <div class="premium-card">
+                    <div class="premium-icon">
+                        <i class="ph-fill ph-crown"></i>
+                    </div>
+                    <h4>Premium Plan</h4>
+                    <p>Unlock advanced AI insights</p>
+                    <button class="upgrade-btn">Upgrade</button>
+                </div>
+
+                <div class="user-profile">
+                    <img src="https://i.pravatar.cc/150?img=11" alt="Alex Profile" class="avatar">
+                    <div class="user-info">
+                        <span class="user-name">Alex Morgan</span>
+                        <span class="account-type">Pro Account</span>
+                    </div>
+                    <i class="ph ph-caret-down"></i>
+                </div>
+            </div>
+        </aside>
+
+        <!-- ================= OVERVIEW VIEW ================= -->
+        <main class="dashboard view active" id="overview-dashboard">
+            <header class="dashboard-header">
+                <div class="header-titles">
+                    <h1>Dashboard</h1>
+                    <p>Welcome back, Alex. Your finances look solid.</p>
+                </div>
+                <div class="header-actions">
+                    <button class="icon-btn">
+                        <i class="ph ph-bell"></i>
+                        <span class="notification-dot"></span>
+                    </button>
+                    <button class="icon-btn">
+                        <i class="ph ph-gear"></i>
+                    </button>
+                </div>
+            </header>
+
+            <div class="dashboard-content">
+                <div class="balance-card">
+                    <div class="balance-header">
+                        <h2>Total Balance</h2>
+                        <span class="trend positive">
+                            <i class="ph ph-trend-up"></i> +2.4%
+                        </span>
+                    </div>
+                    <div class="balance-amount">$42,850.20</div>
+                    <div class="balance-actions">
+                        <button class="btn btn-primary">
+                            <i class="ph ph-plus"></i> Add Money
+                        </button>
+                        <button class="btn btn-secondary">
+                            <i class="ph ph-paper-plane-tilt"></i> Send
+                        </button>
+                    </div>
+                </div>
+
+                <div class="spending-card">
+                    <h2>Spending Breakdown</h2>
+                    <div class="spending-content">
+                        <div class="chart-container">
+                            <canvas id="spendingChart"></canvas>
+                            <div class="chart-center">
+                                <span>Total</span>
+                                <h3>$1,240</h3>
+                            </div>
+                        </div>
+                        <div class="spending-legend">
+                            <div class="legend-item">
+                                <div class="legend-color highlight-1"></div>
+                                <div class="legend-info">
+                                    <span class="legend-label">Housing</span>
+                                    <span class="legend-value">40%</span>
+                                </div>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color highlight-2"></div>
+                                <div class="legend-info">
+                                    <span class="legend-label">Groceries</span>
+                                    <span class="legend-value">30%</span>
+                                </div>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color highlight-3"></div>
+                                <div class="legend-info">
+                                    <span class="legend-label">Entertainment</span>
+                                    <span class="legend-value">30%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <aside class="ai-panel view active" id="overview-ai">
+            <div class="ai-header">
+                <div class="ai-title-area">
+                    <div class="ai-avatar">
+                        <i class="ph-fill ph-robot"></i>
+                        <span class="status-dot"></span>
+                    </div>
+                    <div class="ai-info">
+                        <h2>FinAI Assistant</h2>
+                        <span class="ai-subtitle">Online • Personal Advisor</span>
+                    </div>
+                </div>
+                <button class="icon-btn" style="border: none; background: transparent;">
+                    <i class="ph ph-dots-three"></i>
+                </button>
+            </div>
+
+            <div class="chat-area">
+                <div class="message ai-message">
+                    <div class="bubble">
+                        Based on your recent spending, you're 15% above your Groceries budget. Shall we adjust your
+                        target for this month?
+                    </div>
+                    <span class="time">10:42 AM</span>
+                </div>
+                <div class="message user-message">
+                    <div class="bubble">
+                        Show me a projection if I cut back by $200.
+                    </div>
+                    <span class="time">10:45 AM</span>
+                </div>
+                <div class="message ai-message">
+                    <div class="bubble">
+                        If you save an extra $200 this month and invest it in your <strong>Tech Index Fund</strong>, you
+                        could reach your goal 2 weeks earlier! 🚀
+                    </div>
+                    <span class="time">10:46 AM</span>
+                </div>
+            </div>
+
+            <div class="chat-input-area">
+                <div class="input-wrapper">
+                    <input type="text" placeholder="Type your message...">
+                    <button class="mic-btn"><i class="ph ph-microphone"></i></button>
+                    <button class="send-btn"><i class="ph-fill ph-paper-plane-right"></i></button>
+                </div>
+            </div>
+        </aside>
+
+        <!-- ================= TRANSACTIONS VIEW ================= -->
+        <main class="dashboard view" id="transactions-dashboard">
+            <header class="dashboard-header">
+                <div class="header-titles">
+                    <h1>Transactions</h1>
+                    <p>Track your recent financial activity.</p>
+                </div>
+                <div class="header-actions">
+                    <button class="btn btn-secondary" style="padding: 10px 16px; font-size: 14px;">
+                        <i class="ph ph-funnel"></i> Filter
+                    </button>
+                    <button class="btn btn-secondary" style="padding: 10px 16px; font-size: 14px;">
+                        <i class="ph ph-download-simple"></i> Export
+                    </button>
+                </div>
+            </header>
+
+            <div class="dashboard-content transactions-content">
+                <div class="filter-tabs">
+                    <button class="tab-btn active">All</button>
+                    <button class="tab-btn">Income</button>
+                    <button class="tab-btn">Expenses</button>
+                    <button class="tab-btn">Transfers</button>
+                </div>
+
+                <div class="transactions-container">
+                    <div class="transaction-group">
+                        <h3 class="group-date">Today</h3>
+                        <div class="transaction-item">
+                            <div class="tx-icon expense"><i class="ph ph-shopping-bag"></i></div>
+                            <div class="tx-info">
+                                <h4>Apple Store</h4>
+                                <span>Electronics • Debit Card</span>
+                            </div>
+                            <div class="tx-amount negative">-$1,299.00</div>
+                        </div>
+                        <div class="transaction-item">
+                            <div class="tx-icon expense"><i class="ph ph-coffee"></i></div>
+                            <div class="tx-info">
+                                <h4>Starbucks</h4>
+                                <span>Food & Drink • Credit Card</span>
+                            </div>
+                            <div class="tx-amount negative">-$6.50</div>
+                        </div>
+                    </div>
+
+                    <div class="transaction-group">
+                        <h3 class="group-date">Yesterday</h3>
+                        <div class="transaction-item">
+                            <div class="tx-icon income"><i class="ph ph-briefcase"></i></div>
+                            <div class="tx-info">
+                                <h4>Tech Corp Inc.</h4>
+                                <span>Salary • Direct Deposit</span>
+                            </div>
+                            <div class="tx-amount positive">+$4,250.00</div>
+                        </div>
+                        <div class="transaction-item">
+                            <div class="tx-icon expense"><i class="ph ph-house"></i></div>
+                            <div class="tx-info">
+                                <h4>Downtown Apartments</h4>
+                                <span>Housing • Bank Transfer</span>
+                            </div>
+                            <div class="tx-amount negative">-$1,800.00</div>
+                        </div>
+                        <div class="transaction-item">
+                            <div class="tx-icon transfer"><i class="ph ph-arrows-left-right"></i></div>
+                            <div class="tx-info">
+                                <h4>Savings Account</h4>
+                                <span>Transfer • Internal</span>
+                            </div>
+                            <div class="tx-amount neutral">-$500.00</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <aside class="ai-panel view" id="transactions-ai">
+            <div class="ai-header">
+                <div class="ai-title-area">
+                    <div class="ai-avatar">
+                        <i class="ph-fill ph-robot"></i><span class="status-dot"></span>
+                    </div>
+                    <div class="ai-info">
+                        <h2>FinAI Assistant</h2>
+                        <span class="ai-subtitle">Online • Personal Advisor</span>
+                    </div>
+                </div>
+                <button class="icon-btn" style="border: none; background: transparent;">
+                    <i class="ph ph-dots-three"></i>
+                </button>
+            </div>
+            <div class="chat-area">
+                <div class="message ai-message">
+                    <div class="bubble">I noticed a large transaction of $1,299.00 at Apple Store today. Is this a
+                        planned purchase?</div>
+                    <span class="time">2:14 PM</span>
+                </div>
+                <div class="message user-message">
+                    <div class="bubble">Yes, I bought a new MacBook for work. Can we categorize it as a business
+                        expense?</div>
+                    <span class="time">2:16 PM</span>
+                </div>
+                <div class="message ai-message">
+                    <div class="bubble">Done! I've updated the category to "Business Equipment". This will be reflected
+                        in your next tax report overview. 📊</div>
+                    <span class="time">2:16 PM</span>
+                </div>
+            </div>
+            <div class="chat-input-area">
+                <div class="input-wrapper">
+                    <input type="text" placeholder="Type your message...">
+                    <button class="mic-btn"><i class="ph ph-microphone"></i></button>
+                    <button class="send-btn"><i class="ph-fill ph-paper-plane-right"></i></button>
+                </div>
+            </div>
+        </aside>
+
+        <!-- ================= GOALS VIEW ================= -->
+        <main class="dashboard view" id="goals-dashboard">
+            <header class="dashboard-header">
+                <div class="header-titles">
+                    <h1>Financial Goals</h1>
+                    <p>Track your progress towards what matters.</p>
+                </div>
+                <div class="header-actions">
+                    <button class="btn btn-primary" style="padding: 10px 16px; font-size: 14px;">
+                        <i class="ph ph-plus"></i> New Goal
+                    </button>
+                </div>
+            </header>
+
+            <div class="dashboard-content goals-content">
+                <div class="goal-card highlight-goal">
+                    <div class="goal-header">
+                        <div class="goal-icon-title">
+                            <div class="tx-icon income"><i class="ph ph-house-line"></i></div>
+                            <div>
+                                <h2>Dream House Down Payment</h2>
+                                <span class="goal-deadline">Due Dec 2026 • 24 months left</span>
+                            </div>
+                        </div>
+                        <button class="icon-btn" style="border: none; background: transparent;"><i
+                                class="ph ph-dots-three"></i></button>
+                    </div>
+                    <div class="goal-progress-section">
+                        <div class="goal-amounts">
+                            <span class="current-amount">$45,000</span>
+                            <span class="target-amount">/ $100,000</span>
+                        </div>
+                        <div class="progress-bar-container large">
+                            <div class="progress-bar-fill" style="width: 45%;"></div>
+                        </div>
+                        <div class="progress-stats">
+                            <span>45% Completed</span>
+                            <span class="positive-trend"><i class="ph ph-trend-up"></i> On Track</span>
+                        </div>
+                    </div>
+                    <div class="goal-suggestion">
+                        <i class="ph-fill ph-sparkle" style="color: var(--primary-neon);"></i>
+                        <p><strong>FinAI:</strong> If you allocate your recent $1,200 bonus here, you'll reach your 50%
+                            milestone next week!</p>
+                        <button class="btn btn-secondary btn-sm">Apply Bonus</button>
+                    </div>
+                </div>
+
+                <div class="goals-grid">
+                    <div class="goal-card standard-goal">
+                        <div class="goal-header">
+                            <div class="goal-icon-title">
+                                <div class="tx-icon" style="background-color: rgba(0, 143, 76, 0.1); color: #008F4C;"><i
+                                        class="ph ph-car-profile"></i></div>
+                                <div>
+                                    <h3>New Car Fund</h3>
+                                    <span class="goal-deadline">Due Aug 2024</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="goal-progress-section">
+                            <div class="goal-amounts small">
+                                <span class="current-amount">$12,400</span><span class="target-amount">/ $15,000</span>
+                            </div>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar-fill" style="width: 82%; background-color: #008F4C;"></div>
+                            </div>
+                            <div class="progress-stats"><span>82% Completed</span></div>
+                        </div>
+                    </div>
+
+                    <div class="goal-card standard-goal">
+                        <div class="goal-header">
+                            <div class="goal-icon-title">
+                                <div class="tx-icon" style="background-color: rgba(36, 66, 49, 0.2); color: #8FA396;"><i
+                                        class="ph ph-airplane-tilt"></i></div>
+                                <div>
+                                    <h3>Japan Trip</h3>
+                                    <span class="goal-deadline">Due Mar 2025</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="goal-progress-section">
+                            <div class="goal-amounts small">
+                                <span class="current-amount">$2,100</span><span class="target-amount">/ $6,000</span>
+                            </div>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar-fill" style="width: 35%; background-color: #8FA396;"></div>
+                            </div>
+                            <div class="progress-stats"><span>35% Completed</span></div>
+                        </div>
+                    </div>
+
+                    <div class="goal-card add-goal-card">
+                        <i class="ph ph-plus-circle"></i>
+                        <h3>Create New Goal</h3>
+                        <p>Start saving for your next milestone.</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <aside class="ai-panel view" id="goals-ai">
+            <div class="ai-header">
+                <div class="ai-title-area">
+                    <div class="ai-avatar">
+                        <i class="ph-fill ph-robot"></i><span class="status-dot"></span>
+                    </div>
+                    <div class="ai-info">
+                        <h2>FinAI Assistant</h2>
+                        <span class="ai-subtitle">Online • Personal Advisor</span>
+                    </div>
+                </div>
+                <button class="icon-btn" style="border: none; background: transparent;"><i
+                        class="ph ph-dots-three"></i></button>
+            </div>
+            <div class="chat-area">
+                <div class="message ai-message">
+                    <div class="bubble">You're doing great with your House Down Payment! You've saved $1,500 this month.
+                        🏡</div>
+                    <span class="time">11:05 AM</span>
+                </div>
+                <div class="message user-message">
+                    <div class="bubble">Awesome! How is the Japan Trip looking?</div>
+                    <span class="time">11:08 AM</span>
+                </div>
+                <div class="message ai-message">
+                    <div class="bubble">You're slightly behind schedule for the trip. To hit your $6k goal by March, you
+                        should increase your monthly contribution from $150 to $220. Should I set up an auto-transfer?
+                    </div>
+                    <span class="time">11:09 AM</span>
+                </div>
+            </div>
+            <div class="chat-input-area">
+                <div class="input-wrapper">
+                    <input type="text" placeholder="Type your message...">
+                    <button class="mic-btn"><i class="ph ph-microphone"></i></button>
+                    <button class="send-btn"><i class="ph-fill ph-paper-plane-right"></i></button>
+                </div>
+            </div>
+        </aside>
+
+        <!-- ================= INVESTMENTS VIEW ================= -->
+        <main class="dashboard view" id="investments-dashboard">
+            <header class="dashboard-header">
+                <div class="header-titles">
+                    <h1>Portfolio</h1>
+                    <p>Track and grow your wealth.</p>
+                </div>
+                <div class="header-actions">
+                    <button class="btn btn-secondary" style="padding: 10px 16px; font-size: 14px;">
+                        <i class="ph ph-arrows-clock-wise"></i> Auto-Invest
+                    </button>
+                    <button class="btn btn-primary" style="padding: 10px 16px; font-size: 14px;">
+                        <i class="ph ph-plus"></i> Buy Asset
+                    </button>
+                </div>
+            </header>
+
+            <div class="dashboard-content investments-content">
+                <div class="portfolio-summary-card">
+                    <div class="portfolio-left">
+                        <h2>Total Invested</h2>
+                        <div class="portfolio-amount">$124,500.80</div>
+                        <div class="portfolio-returns">
+                            <span class="trend positive large"><i class="ph ph-trend-up"></i> +$8,240.50 (7.1%)</span>
+                            <span class="period-label">All time</span>
+                        </div>
+                    </div>
+                    <div class="portfolio-right">
+                        <div class="asset-allocation">
+                            <div class="allocation-item">
+                                <span class="alloc-dot" style="background-color: var(--primary-neon);"></span>
+                                <span class="alloc-label">Stocks: 60%</span>
+                            </div>
+                            <div class="allocation-item">
+                                <span class="alloc-dot" style="background-color: #008F4C;"></span>
+                                <span class="alloc-label">Crypto: 25%</span>
+                            </div>
+                            <div class="allocation-item">
+                                <span class="alloc-dot" style="background-color: #8FA396;"></span>
+                                <span class="alloc-label">Bonds: 15%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="insight-banner">
+                    <div class="insight-icon"><i class="ph-fill ph-sparkle"></i></div>
+                    <div class="insight-text">
+                        <h4>FinAI Market Insight</h4>
+                        <p>Tech sector is showing strong momentum. Consider rebalancing your Crypto profile to secure
+                            recent 15% gains.</p>
+                    </div>
+                    <button class="btn btn-secondary btn-sm"
+                        style="background-color: rgba(255,255,255,0.1); border:none;">Review Portfolio</button>
+                </div>
+
+                <div class="assets-section">
+                    <div class="section-header">
+                        <h3>Your Assets</h3>
+                        <div class="filter-tabs" style="margin-bottom: 0; border: none; padding-bottom: 0;">
+                            <button class="tab-btn active" style="padding: 4px 12px; font-size: 13px;">All</button>
+                            <button class="tab-btn" style="padding: 4px 12px; font-size: 13px;">Stocks</button>
+                            <button class="tab-btn" style="padding: 4px 12px; font-size: 13px;">Crypto</button>
+                        </div>
+                    </div>
+                    <div class="assets-grid">
+                        <div class="asset-card">
+                            <div class="asset-top">
+                                <div class="asset-icon"><i class="ph-fill ph-apple-logo"></i></div>
+                                <div class="asset-title">
+                                    <h4>Apple Inc.</h4><span>AAPL</span>
+                                </div>
+                                <div class="asset-chart-mini">
+                                    <svg viewBox="0 0 100 30" class="mini-trend-up">
+                                        <path d="M0,30 L20,20 L40,25 L60,10 L80,15 L100,0" fill="none"
+                                            stroke="var(--primary-neon)" stroke-width="2" />
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="asset-bottom">
+                                <div class="asset-value">
+                                    <span class="value">$24,150.00</span><span class="shares">140 Shares</span>
+                                </div>
+                                <div class="asset-change positive">
+                                    <span>+$420.50</span><span>+1.8%</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="asset-card">
+                            <div class="asset-top">
+                                <div class="asset-icon"
+                                    style="color: #F7931A; background-color: rgba(247, 147, 26, 0.1);"><i
+                                        class="ph-fill ph-currency-btc"></i></div>
+                                <div class="asset-title">
+                                    <h4>Bitcoin</h4><span>BTC</span>
+                                </div>
+                                <div class="asset-chart-mini">
+                                    <svg viewBox="0 0 100 30" class="mini-trend-up">
+                                        <path d="M0,25 L20,30 L40,15 L60,20 L80,5 L100,10" fill="none"
+                                            stroke="var(--primary-neon)" stroke-width="2" />
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="asset-bottom">
+                                <div class="asset-value">
+                                    <span class="value">$31,200.80</span><span class="shares">0.45 BTC</span>
+                                </div>
+                                <div class="asset-change positive">
+                                    <span>+$1,240.20</span><span>+4.2%</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="asset-card">
+                            <div class="asset-top">
+                                <div class="asset-icon"
+                                    style="color: #00A3E0; background-color: rgba(0, 163, 224, 0.1);"><i
+                                        class="ph-fill ph-car-profile"></i></div>
+                                <div class="asset-title">
+                                    <h4>Tesla</h4><span>TSLA</span>
+                                </div>
+                                <div class="asset-chart-mini">
+                                    <svg viewBox="0 0 100 30" class="mini-trend-down">
+                                        <path d="M0,0 L20,15 L40,10 L60,25 L80,20 L100,30" fill="none" stroke="#FF4C4C"
+                                            stroke-width="2" />
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="asset-bottom">
+                                <div class="asset-value">
+                                    <span class="value">$12,450.00</span><span class="shares">65 Shares</span>
+                                </div>
+                                <div class="asset-change negative">
+                                    <span style="color: var(--text-main);">-$320.10</span><span
+                                        style="color: var(--text-main);">-2.5%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <aside class="ai-panel view" id="investments-ai">
+            <div class="ai-header">
+                <div class="ai-title-area">
+                    <div class="ai-avatar">
+                        <i class="ph-fill ph-robot"></i><span class="status-dot"></span>
+                    </div>
+                    <div class="ai-info">
+                        <h2>FinAI Assistant</h2>
+                        <span class="ai-subtitle">Online • Wealth Advisor</span>
+                    </div>
+                </div>
+                <button class="icon-btn" style="border: none; background: transparent;"><i
+                        class="ph ph-dots-three"></i></button>
+            </div>
+            <div class="chat-area">
+                <div class="message ai-message">
+                    <div class="bubble">Your portfolio is up 7.1% overall! Based on your risk profile, you're currently
+                        heavily weighted in tech stocks (AAPL, TSLA). 📈</div>
+                    <span class="time">3:20 PM</span>
+                </div>
+                <div class="message user-message">
+                    <div class="bubble">Should I diversify? What do you suggest?</div>
+                    <span class="time">3:22 PM</span>
+                </div>
+                <div class="message ai-message">
+                    <div class="bubble">I'd recommend looking into global index funds like Vanguard Total World Stock
+                        (VT) or adding some dividend-paying defensive stocks to hedge against volatility. Would you like
+                        me to run a simulation?</div>
+                    <span class="time">3:23 PM</span>
+                </div>
+            </div>
+            <div class="chat-input-area">
+                <div class="input-wrapper">
+                    <input type="text" placeholder="Type your message...">
+                    <button class="mic-btn"><i class="ph ph-microphone"></i></button>
+                    <button class="send-btn"><i class="ph-fill ph-paper-plane-right"></i></button>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- ================= MODALS ================= -->
+    <div class="modal-overlay" id="addMoneyModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add Money</h2>
+                <button class="close-modal-btn" id="closeAddMoneyBtn"><i class="ph ph-x"></i></button>
+            </div>
+            <div class="modal-body">
+                <p class="modal-subtitle">Transfer funds from your linked accounts.</p>
+
+                <div class="form-group amount-group">
+                    <label>Amount</label>
+                    <div class="amount-input-wrapper">
+                        <span class="currency-symbol">$</span>
+                        <input type="number" placeholder="0.00" min="1" step="0.01" id="addMoneyAmount">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>From</label>
+                    <div class="select-wrapper">
+                        <select>
+                            <option value="bank1">Chase Checking (**** 1234)</option>
+                            <option value="bank2">Bank of America (**** 5678)</option>
+                            <option value="card">Visa Debit (**** 9012)</option>
+                        </select>
+                        <i class="ph ph-caret-down select-icon"></i>
+                    </div>
+                </div>
+
+                <div class="quick-amounts">
+                    <button class="quick-btn">$50</button>
+                    <button class="quick-btn">$100</button>
+                    <button class="quick-btn">$500</button>
+                    <button class="quick-btn">$1k</button>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary cancel-modal-btn" id="cancelAddMoneyBtn"
+                    style="width: auto; padding: 12px 24px;">Cancel</button>
+                <button class="btn btn-primary" style="flex: 1;" id="confirmAddMoneyBtn">Confirm Transfer</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
